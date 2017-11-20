@@ -9,20 +9,21 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class SecurityUtility {
-	private static final String SALT = "salt"; //Salt should be protected carefully, should be a special string that is hard to be cracked
+	
+	private static final String SALT = "salt"; //Salt should be protected carefully
 	
 	@Bean
-	public static BCryptPasswordEncoder passwordEncoder(){
+	public static BCryptPasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder(12, new SecureRandom(SALT.getBytes()));
 	}
 	
-	//generate a random string
 	@Bean
-	public static String randomPassword(){
+	public static String randomPassword() {
 		String SALTCHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
 		StringBuilder salt = new StringBuilder();
 		Random rnd = new Random();
-		while(salt.length() < 18){
+		
+		while(salt.length() < 18) {
 			int index = (int) (rnd.nextFloat() * SALTCHARS.length());
 			salt.append(SALTCHARS.charAt(index));
 		}

@@ -18,15 +18,15 @@ public class UserSecurityService implements UserDetailsService{
 	
 	
 	//UserRepository will be used as a bean to access the database
-	@Autowired
+	@Autowired 
 	private UserRepository userRepository;
 	
 	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException{
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		User user = userRepository.findByUsername(username);
-		if(user == null){
+		if(user == null) {
 			LOG.warn("Username {} not found", username);
-			throw new UsernameNotFoundException("Username " + username + " not found");
+			throw new UsernameNotFoundException("Username "+username+" not found");
 		}
 		return user;
 	}

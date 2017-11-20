@@ -15,6 +15,16 @@ import javax.persistence.Table;
 public class UserRole {
 	private static final long serialVersionUID = 1L;
 	
+	public UserRole(User user, Role role) {
+		super();
+		this.user = user;
+		this.role = role;
+	}
+
+	public UserRole() {
+		super();
+	}
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long userRoleId;

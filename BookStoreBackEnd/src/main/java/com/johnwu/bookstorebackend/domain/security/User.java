@@ -7,17 +7,20 @@ import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+
+@Entity
 public class User implements UserDetails, Serializable{
 	private static final long serialVersionUID = 1L;
 	
@@ -33,19 +36,16 @@ public class User implements UserDetails, Serializable{
 	
 	private String email;
 	private String phone;
-	private boolean enable = true;
+	private boolean enabled = true;
 	
 	/*reason why adding a @JsonIgnore annotation here is that 
 	 * if we try to retrieve the UserRole data from database, it will retrieve 
 	 * the corresponding user record. However, inside the user record, it contains a 
 	 * list of userRoles. Since the fetchType is eager, so it will once again fetch the userRole
 	 * record, which will creates a infinite loop for fetching parent and child class data*/
-	@OneToMany(mappedBy = "user", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	@OneToMany(mappedBy = "user", cascade=CascadeType.ALL, fetch = FetchType.EAGER)
 	@JsonIgnore
-	private Set<UserRole> userRoles = new HashSet<UserRole>();
-	
-	
-	
+	private Set<UserRole> userRoles = new HashSet<>();
 
 	public Long getId() {
 		return id;
@@ -53,6 +53,22 @@ public class User implements UserDetails, Serializable{
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public String getFirstName() {
@@ -87,12 +103,10 @@ public class User implements UserDetails, Serializable{
 		this.phone = phone;
 	}
 
-	public boolean isEnable() {
-		return enable;
-	}
+	
 
-	public void setEnable(boolean enable) {
-		this.enable = enable;
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
 	}
 
 	public Set<UserRole> getUserRoles() {
@@ -102,31 +116,13 @@ public class User implements UserDetails, Serializable{
 	public void setUserRoles(Set<UserRole> userRoles) {
 		this.userRoles = userRoles;
 	}
-	
-	
-	public String getPassword() {
-		// TODO Auto-generated method stub
-		return null; 
-	}
-
-	public String getUsername() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		
-		Set<GrantedAuthority> authorities = new HashSet<GrantedAuthority>();
-		this.userRoles.forEach(ur -> authorities.add(new Authority(ur.getRole().getName())));
+		Set<GrantedAuthority> authorities = new HashSet<>();
+		userRoles.forEach(ur -> authorities.add(new Authority(ur.getRole().getName())));
+		
 		return authorities;
 	}
 
@@ -147,13 +143,13 @@ public class User implements UserDetails, Serializable{
 		// TODO Auto-generated method stub
 		return true;
 	}
-
+	
 	@Override
 	public boolean isEnabled() {
-		// TODO Auto-generated method stub
-		return this.enable;
+		return enabled;
 	}
-
+	
+	
 	
 	
 }

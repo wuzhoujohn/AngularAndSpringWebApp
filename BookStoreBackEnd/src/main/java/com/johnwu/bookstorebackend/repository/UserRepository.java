@@ -19,7 +19,7 @@ import com.johnwu.bookstorebackend.domain.security.User;
  * and another one is the class' primary key*/
 
 public interface UserRepository extends CrudRepository<User, Long>{
-		User findByUsername(String username);
-		User findByEmail(String email);
-		List<User> finaAll();
+	User findByUsername(String username);
+	User findByEmail(String email);
+	List<User> findAll();
 }
