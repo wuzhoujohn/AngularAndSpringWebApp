@@ -16,15 +16,13 @@ public class UserSecurityService implements UserDetailsService{
 	
 	private static final Logger LOG = LoggerFactory.getLogger(UserSecurityService.class);
 	
-	
-	//UserRepository will be used as a bean to access the database
 	@Autowired 
 	private UserRepository userRepository;
 	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		User user = userRepository.findByUsername(username);
-		if(user == null) {
+		if(null == user) {
 			LOG.warn("Username {} not found", username);
 			throw new UsernameNotFoundException("Username "+username+" not found");
 		}

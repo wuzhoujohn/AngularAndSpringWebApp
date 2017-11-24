@@ -1,5 +1,7 @@
 package com.johnwu.bookstorebackend.domain.security;
 
+import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -12,7 +14,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="user_role")
-public class UserRole {
+public class UserRole implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	public UserRole(User user, Role role) {
