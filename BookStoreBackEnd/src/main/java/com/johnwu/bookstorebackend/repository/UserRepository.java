@@ -14,7 +14,7 @@ import com.johnwu.bookstorebackend.domain.security.User;
  *
  */
 
-/*CurdRepository will help us generate the crete class for UserRepository. 
+/*CurdRepository will help us generate the concrete class for UserRepository. 
  * it has two parameters, one is the class record that we want to get from database, 
  * and another one is the class' primary key*/
 
